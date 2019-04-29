@@ -22,18 +22,18 @@ defmodule DinamicSchemaWeb.CustomObjectView do
             </tr>
           <% end %>
           <tr>
-              <td>
-                <input type="text" name="name" autofocus />
-              </td>
-              <td>
-                <select name="type">
-                  <option value="string">String</option>
-                  <option value="integer">Integer</option>
-                </select>
-              </td>
-              <td>
-                <button type="submit">Add row</button>
-              </td>
+            <td>
+              <input type="text" name="name" autofocus />
+            </td>
+            <td>
+              <select name="type">
+                <option value="string">String</option>
+                <option value="integer">Integer</option>
+              </select>
+            </td>
+            <td>
+              <button type="submit">Add row</button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -55,8 +55,8 @@ defmodule DinamicSchemaWeb.CustomObjectView do
     update_schema(schema, socket)
   end
 
-  def handle_event("remove_field", data, socket) do
-    schema = socket.assigns.schema |> Map.delete(data)
+  def handle_event("remove_field", name, socket) do
+    schema = socket.assigns.schema |> Map.delete(name)
     update_schema(schema, socket)
   end
 
