@@ -74,10 +74,4 @@ defmodule DinamicSchemaWeb.CustomObjectView do
         raise "oops"
     end
   end
-
-  defp convert_inputs_to_schema(fields) do
-    fields
-    |> Enum.map(fn {key, field} -> {field["name"], field["type"]} end)
-    |> Map.new()
-  end
 end
