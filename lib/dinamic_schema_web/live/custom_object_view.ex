@@ -16,25 +16,27 @@ defmodule DinamicSchemaWeb.CustomObjectView do
         <tbody>
           <%= for {{name, type}, counter} <- Enum.with_index(@schema) do %>
             <tr>
-              <td><input type="text" name="struct[<%= counter %>][name]" value=<%= name %> readonly /></td>
-              <td><input type="text" name="struct[<%= counter %>][type]" value=<%= type %> readonly /></td>
+              <td><%= name %></td>
+              <td><%= type %></td>
               <td><button phx-click="remove_field" phx-value=<%= name %>>Remove</button></td>
             </tr>
           <% end %>
           <tr>
               <td>
-                <input type="text" name="struct[<%= Enum.count(@schema) + 1 %>][name]" autofocus />
+                <input type="text" name="name" autofocus />
               </td>
               <td>
-                <select name="struct[<%= Enum.count(@schema) + 1 %>][type]">
+                <select name="type">
                   <option value="string">String</option>
                   <option value="integer">Integer</option>
                 </select>
               </td>
+              <td>
+                <button type="submit">Add row</button>
+              </td>
           </tr>
         </tbody>
       </table>
-      <button type="submit">Add row</button>
     </form>
 
     <pre >
@@ -44,7 +46,7 @@ defmodule DinamicSchemaWeb.CustomObjectView do
   end
 
   def mount(session, socket) do
-    send(self(), {:get, "all"})
+    send(self(), {:get, nil})
     {:ok, assign(socket, schema: %{})}
   end
 
@@ -52,8 +54,8 @@ defmodule DinamicSchemaWeb.CustomObjectView do
     get_schema(socket)
   end
 
-  def handle_event("submit", %{"struct" => fields}, socket) do
-    schema = convert_inputs_to_schema(fields)
+  def handle_event("submit", %{"name" => name, "type" => type}, socket) do
+    schema = socket.assigns.schema |> Map.merge(%{name => type})
     update_schema(schema, socket)
   end
 
