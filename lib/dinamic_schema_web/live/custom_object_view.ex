@@ -50,10 +50,6 @@ defmodule DinamicSchemaWeb.CustomObjectView do
     {:ok, assign(socket, schema: %{})}
   end
 
-  def handle_event("get", _, socket) do
-    get_schema(socket)
-  end
-
   def handle_event("submit", %{"name" => name, "type" => type}, socket) do
     schema = socket.assigns.schema |> Map.merge(%{name => type})
     update_schema(schema, socket)
@@ -65,7 +61,8 @@ defmodule DinamicSchemaWeb.CustomObjectView do
   end
 
   def handle_info({:get, _filter}, socket) do
-    get_schema(socket)
+    struct = CustomObjects.get_struct()
+    {:noreply, assign(socket, schema: struct.schema, table_name: struct.table_name)}
   end
 
   defp update_schema(schema, socket) do
@@ -76,11 +73,6 @@ defmodule DinamicSchemaWeb.CustomObjectView do
       {:error, changeset} ->
         raise "oops"
     end
-  end
-
-  defp get_schema(socket) do
-    struct = CustomObjects.get_struct()
-    {:noreply, assign(socket, schema: struct.schema, table_name: struct.table_name)}
   end
 
   defp convert_inputs_to_schema(fields) do
