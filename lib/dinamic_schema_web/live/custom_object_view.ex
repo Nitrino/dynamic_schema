@@ -14,10 +14,11 @@ defmodule DinamicSchemaWeb.CustomObjectView do
           </tr>
         </thead>
         <tbody>
-          <%= for {{field, type}, counter} <- Enum.with_index(@schema) do %>
+          <%= for {{name, type}, counter} <- Enum.with_index(@schema) do %>
             <tr>
-              <td><input type="text" name="struct[<%= counter %>][name]" value="<%= field %>" readonly /></td>
-              <td><input type="text" name="struct[<%= counter %>][type]" value="<%= type %>" readonly /></td>
+              <td><input type="text" name="struct[<%= counter %>][name]" value=<%= name %> readonly /></td>
+              <td><input type="text" name="struct[<%= counter %>][type]" value=<%= type %> readonly /></td>
+              <td><button phx-click="remove_field" phx-value=<%= name %>>Remove</button></td>
             </tr>
           <% end %>
           <tr>
@@ -31,13 +32,12 @@ defmodule DinamicSchemaWeb.CustomObjectView do
                 </select>
               </td>
           </tr>
-
         </tbody>
       </table>
       <button type="submit">Add row</button>
     </form>
 
-    <pre>
+    <pre >
       <%= inspect(@schema) %>
     </pre>
     """
@@ -49,12 +49,24 @@ defmodule DinamicSchemaWeb.CustomObjectView do
   end
 
   def handle_event("get", _, socket) do
-    update_schema(socket)
+    get_schema(socket)
   end
 
   def handle_event("submit", %{"struct" => fields}, socket) do
     schema = convert_inputs_to_schema(fields)
+    update_schema(schema, socket)
+  end
 
+  def handle_event("remove_field", data, socket) do
+    schema = socket.assigns.schema |> Map.delete(data)
+    update_schema(schema, socket)
+  end
+
+  def handle_info({:get, _filter}, socket) do
+    get_schema(socket)
+  end
+
+  defp update_schema(schema, socket) do
     case CustomObjects.update_struct(socket.assigns.table_name, schema) do
       {:ok, struct} ->
         {:noreply, assign(socket, schema: struct.schema, table_name: struct.table_name)}
@@ -64,11 +76,7 @@ defmodule DinamicSchemaWeb.CustomObjectView do
     end
   end
 
-  def handle_info({:get, _filter}, socket) do
-    update_schema(socket)
-  end
-
-  defp update_schema(socket) do
+  defp get_schema(socket) do
     struct = CustomObjects.get_struct()
     {:noreply, assign(socket, schema: struct.schema, table_name: struct.table_name)}
   end
