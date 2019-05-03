@@ -29,11 +29,16 @@ defmodule DynamicSchema.CustomObjects do
   def update_struct(table_name, schema) do
     struct = Repo.one(from c in Struct, where: ^table_name == c.table_name)
     new_struct = Ecto.Changeset.change(struct, schema: schema)
-    Repo.update(new_struct)
+    result = Repo.update(new_struct)
+
+    generate_type_files(table_name)
+    generate_schema()
+    reload_schema()
+
+    result
   end
 
-  def generate_type_files do
-    table_name = "custom_users"
+  def generate_type_files(table_name \\ "custom_users") do
     struct = Repo.one(from c in Struct, where: ^table_name == c.table_name)
 
     body =
@@ -66,6 +71,13 @@ defmodule DynamicSchema.CustomObjects do
       )
 
     File.write!(schema_path, body)
+  end
+
+  def reload_schema do
+    Path.wildcard(types_path <> "/*.ex")
+    |> Enum.map(&Code.eval_file/1)
+
+    Code.eval_file(schema_path)
   end
 
   @doc """
