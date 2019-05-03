@@ -59,6 +59,22 @@ defmodule DynamicSchema.CustomObjects do
     File.write!(path, body)
   end
 
+  def generate_schema do
+    types =
+      Repo.all(from c in Struct, select: c.table_name)
+      |> Enum.map(fn type -> {type, Macro.camelize(type)} end)
+      |> Map.new()
+
+    body =
+      Phoenix.View.render_to_string(
+        DynamicSchemaWeb.TypeView,
+        "schema",
+        types: types
+      )
+
+    File.write!(schema_path, body)
+  end
+
   @doc """
   Gets a single object.
 
@@ -142,6 +158,10 @@ defmodule DynamicSchema.CustomObjects do
 
   defp graph_ql_path do
     :code.priv_dir(:dynamic_schema) |> Path.join("graph_ql")
+  end
+
+  defp schema_path do
+    graph_ql_path |> Path.join("schema.ex")
   end
 
   defp types_path do

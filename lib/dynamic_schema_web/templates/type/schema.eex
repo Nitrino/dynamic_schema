@@ -1,0 +1,23 @@
+defmodule DynamicSchemaWeb.Schema do
+  @moduledoc """
+  Main GraphQL schema module
+  """
+
+  use Absinthe.Schema
+
+  alias DynamicSchemaWeb.CustomObjectsResolver
+
+<%= for {type, type_module} <- @types do %>
+  import_types(__MODULE__.<% type_module %>)
+
+  query do
+    field :all_<%= type %>, list_of(:<%= type %>_object) do
+      resolve(&CustomObjectsResolver.all_objects/3)
+    end
+  end
+
+  object :<%= type %>_object do
+    field(:data, :<%= type %>)
+  end
+<% end %>
+end
