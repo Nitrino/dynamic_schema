@@ -48,12 +48,12 @@ defmodule DynamicSchema.CustomObjects do
         DynamicSchemaWeb.TypeView,
         "base",
         module_name: Macro.camelize(table_name),
-        schema: struct.schema
+        schema: struct.schema,
+        object_name: table_name
       )
 
     path =
-      :code.priv_dir(:dynamic_schema)
-      |> Path.join("types")
+      types_path
       |> Path.join("#{table_name}.ex")
 
     File.write!(path, body)
@@ -138,5 +138,13 @@ defmodule DynamicSchema.CustomObjects do
   """
   def change_object(%Object{} = object) do
     Object.changeset(object, %{})
+  end
+
+  defp graph_ql_path do
+    :code.priv_dir(:dynamic_schema) |> Path.join("graph_ql")
+  end
+
+  defp types_path do
+    graph_ql_path |> Path.join("types")
   end
 end
