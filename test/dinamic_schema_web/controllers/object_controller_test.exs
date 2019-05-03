@@ -1,7 +1,7 @@
-defmodule DinamicSchemaWeb.ObjectControllerTest do
-  use DinamicSchemaWeb.ConnCase
+defmodule DynamicSchemaWeb.ObjectControllerTest do
+  use DynamicSchemaWeb.ConnCase
 
-  alias DinamicSchema.CustomObjects
+  alias DynamicSchema.CustomObjects
 
   @create_attrs %{data: %{}, struct: %{}}
   @update_attrs %{data: %{}, struct: %{}}
@@ -75,6 +75,7 @@ defmodule DinamicSchemaWeb.ObjectControllerTest do
     test "deletes chosen object", %{conn: conn, object: object} do
       conn = delete(conn, Routes.object_path(conn, :delete, object))
       assert redirected_to(conn) == Routes.object_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.object_path(conn, :show, object))
       end

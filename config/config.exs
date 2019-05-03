@@ -7,15 +7,15 @@
 # General application configuration
 use Mix.Config
 
-config :dinamic_schema,
-  ecto_repos: [DinamicSchema.Repo]
+config :dynamic_schema,
+  ecto_repos: [DynamicSchema.Repo]
 
 # Configures the endpoint
-config :dinamic_schema, DinamicSchemaWeb.Endpoint,
+config :dynamic_schema, DynamicSchemaWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "W3Joy/WFj5SqLLieNndHZNCwdunYRHZ0Z/9+nJ/6NzReLSW+GUCqL1nFkVJQkpL3",
-  render_errors: [view: DinamicSchemaWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: DinamicSchema.PubSub, adapter: Phoenix.PubSub.PG2],
+  render_errors: [view: DynamicSchemaWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: DynamicSchema.PubSub, adapter: Phoenix.PubSub.PG2],
   live_view: [signing_salt: "ImiS5UKs"]
 
 config :phoenix,

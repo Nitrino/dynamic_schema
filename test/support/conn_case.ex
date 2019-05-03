@@ -1,4 +1,4 @@
-defmodule DinamicSchemaWeb.ConnCase do
+defmodule DynamicSchemaWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -19,18 +19,18 @@ defmodule DinamicSchemaWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      alias DinamicSchemaWeb.Router.Helpers, as: Routes
+      alias DynamicSchemaWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint DinamicSchemaWeb.Endpoint
+      @endpoint DynamicSchemaWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DinamicSchema.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DynamicSchema.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(DinamicSchema.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(DynamicSchema.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

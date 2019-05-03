@@ -1,3 +1,3 @@
-defmodule DinamicSchemaWeb.LayoutViewTest do
-  use DinamicSchemaWeb.ConnCase, async: true
+defmodule DynamicSchemaWeb.LayoutViewTest do
+  use DynamicSchemaWeb.ConnCase, async: true
 end

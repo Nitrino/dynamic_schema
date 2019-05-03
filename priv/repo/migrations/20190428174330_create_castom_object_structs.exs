@@ -1,4 +1,4 @@
-defmodule DinamicSchema.Repo.Migrations.CreateCastomObjectStructs do
+defmodule DynamicSchema.Repo.Migrations.CreateCastomObjectStructs do
   use Ecto.Migration
 
   def change do
@@ -8,6 +8,5 @@ defmodule DinamicSchema.Repo.Migrations.CreateCastomObjectStructs do
 
       timestamps()
     end
-
   end
 end

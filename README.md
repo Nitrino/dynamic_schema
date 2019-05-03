@@ -1,4 +1,4 @@
-# DinamicSchema
+# DynamicSchema
 
 To start your Phoenix server:
 

@@ -1,4 +1,4 @@
-defmodule DinamicSchema.Repo.Migrations.CreateObjects do
+defmodule DynamicSchema.Repo.Migrations.CreateObjects do
   use Ecto.Migration
 
   def change do
@@ -8,6 +8,5 @@ defmodule DinamicSchema.Repo.Migrations.CreateObjects do
 
       timestamps()
     end
-
   end
 end

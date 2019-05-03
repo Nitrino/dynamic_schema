@@ -1,4 +1,4 @@
-defmodule DynamicSchemaWeb.Schema.CustomTypes do
+defmodule DynamicSchemaWeb.Schema.CustomType do
   use Absinthe.Schema.Notation
 
   object :custom do

@@ -1,5 +1,5 @@
-defmodule DinamicSchemaWeb.PageControllerTest do
-  use DinamicSchemaWeb.ConnCase
+defmodule DynamicSchemaWeb.PageControllerTest do
+  use DynamicSchemaWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

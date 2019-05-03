@@ -1,2 +1,2 @@
 ExUnit.start()
-Ecto.Adapters.SQL.Sandbox.mode(DinamicSchema.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(DynamicSchema.Repo, :manual)

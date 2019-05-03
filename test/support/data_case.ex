@@ -1,4 +1,4 @@
-defmodule DinamicSchema.DataCase do
+defmodule DynamicSchema.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -16,20 +16,20 @@ defmodule DinamicSchema.DataCase do
 
   using do
     quote do
-      alias DinamicSchema.Repo
+      alias DynamicSchema.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import DinamicSchema.DataCase
+      import DynamicSchema.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DinamicSchema.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DynamicSchema.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(DinamicSchema.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(DynamicSchema.Repo, {:shared, self()})
     end
 
     :ok

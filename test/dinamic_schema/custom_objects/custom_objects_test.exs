@@ -1,10 +1,10 @@
-defmodule DinamicSchema.CustomObjectsTest do
-  use DinamicSchema.DataCase
+defmodule DynamicSchema.CustomObjectsTest do
+  use DynamicSchema.DataCase
 
-  alias DinamicSchema.CustomObjects
+  alias DynamicSchema.CustomObjects
 
   describe "objects" do
-    alias DinamicSchema.CustomObjects.Object
+    alias DynamicSchema.CustomObjects.Object
 
     @valid_attrs %{data: %{}, struct: %{}}
     @update_attrs %{data: %{}, struct: %{}}

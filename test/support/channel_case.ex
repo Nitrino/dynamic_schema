@@ -1,4 +1,4 @@
-defmodule DinamicSchemaWeb.ChannelCase do
+defmodule DynamicSchemaWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,15 +21,15 @@ defmodule DinamicSchemaWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint DinamicSchemaWeb.Endpoint
+      @endpoint DynamicSchemaWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DinamicSchema.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DynamicSchema.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(DinamicSchema.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(DynamicSchema.Repo, {:shared, self()})
     end
 
     :ok

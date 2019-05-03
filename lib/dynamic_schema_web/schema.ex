@@ -7,8 +7,6 @@ defmodule DynamicSchemaWeb.Schema do
 
   alias DynamicSchemaWeb.CustomObjectsResolver
 
-  import_types(__MODULE__.CustomTypes)
-
   # this is the query entry point to our app
   query do
     field :all_objects, list_of(:object) do
@@ -18,6 +16,22 @@ defmodule DynamicSchemaWeb.Schema do
 
   @desc "An error encountered trying to persist input"
   object :object do
-    field(:data, :custom)
+    field(:data, :json)
+  end
+
+  # object :custom do
+  #   field(:title, :string)
+  #   field(:count, :integer)
+  # end
+
+  scalar :json do
+    parse(fn input ->
+      case Jason.decode(input.value) do
+        {:ok, result} -> result
+        _ -> :error
+      end
+    end)
+
+    serialize(&Jason.encode!/1)
   end
 end

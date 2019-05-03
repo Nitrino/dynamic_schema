@@ -1,0 +1,9 @@
+defmodule DynamicSchemaWeb.Schema.<%= @module_name %> do
+  use Absinthe.Schema.Notation
+
+  object :custom do
+    <%= for {name, type} <- @schema do %>
+      field(:<%= name %>, :<%= type %>)
+    <% end %>>
+  end
+end

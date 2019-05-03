@@ -1,3 +1,3 @@
-alias DinamicSchema.Repo
-alias DinamicSchema.CustomObjects.Object
-alias DinamicSchema.CustomObjects.Struct
+alias DynamicSchema.Repo
+alias DynamicSchema.CustomObjects.Object
+alias DynamicSchema.CustomObjects.Struct

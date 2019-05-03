@@ -1,9 +1,9 @@
-defmodule DinamicSchema.MixProject do
+defmodule DynamicSchema.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :dinamic_schema,
+      app: :dynamic_schema,
       version: "0.1.0",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule DinamicSchema.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {DinamicSchema.Application, []},
+      mod: {DynamicSchema.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
