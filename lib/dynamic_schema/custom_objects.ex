@@ -26,13 +26,6 @@ defmodule DynamicSchema.CustomObjects do
     Repo.all(Struct) |> Enum.at(0)
   end
 
-  def add_field(table_name, name, type) do
-    struct = Repo.one(from c in Struct, where: c.table_name == "custom_users")
-    new_schema = Map.put_new(struct.schema, name, type)
-    new_struct = Ecto.Changeset.change(struct, schema: new_schema)
-    Repo.update(new_struct)
-  end
-
   def update_struct(table_name, schema) do
     struct = Repo.one(from c in Struct, where: ^table_name == c.table_name)
     new_struct = Ecto.Changeset.change(struct, schema: schema)
