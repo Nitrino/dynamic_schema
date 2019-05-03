@@ -8,7 +8,7 @@ defmodule DynamicSchemaWeb.Schema do
   alias DynamicSchemaWeb.CustomObjectsResolver
 
 <%= for {type, type_module} <- @types do %>
-  import_types(__MODULE__.<% type_module %>)
+  import_types(__MODULE__.<%= type_module %>)
 
   query do
     field :all_<%= type %>, list_of(:<%= type %>_object) do
