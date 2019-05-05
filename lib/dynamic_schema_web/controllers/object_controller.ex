@@ -7,6 +7,8 @@ defmodule DynamicSchemaWeb.ObjectController do
   import Phoenix.LiveView.Controller
 
   def index(conn, _params) do
+    DynamicSchema.CustomObjects.reload_schema()
+
     # objects = CustomObjects.list_objects()
     live_render(conn, DynamicSchemaWeb.CustomObjectView, session: %{})
     # render(conn, "index.html", objects: objects)

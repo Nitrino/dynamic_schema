@@ -39,15 +39,21 @@ defmodule DynamicSchemaWeb.CustomObjectView do
       </table>
     </form>
 
-    <pre >
+    <h4>Database schema:</h4>
+    <pre>
       <%= inspect(@schema) %>
+    </pre>
+
+    <h4>Absinthe types:</h4>
+    <pre>
+      <%= inspect(@queries) %>
     </pre>
     """
   end
 
   def mount(session, socket) do
     send(self(), {:get, nil})
-    {:ok, assign(socket, schema: %{})}
+    {:ok, assign(socket, schema: %{}, queries: get_queries())}
   end
 
   def handle_event("submit", %{"name" => name, "type" => type}, socket) do
@@ -62,16 +68,44 @@ defmodule DynamicSchemaWeb.CustomObjectView do
 
   def handle_info({:get, _filter}, socket) do
     struct = CustomObjects.get_struct()
-    {:noreply, assign(socket, schema: struct.schema, table_name: struct.table_name)}
+
+    {:noreply,
+     assign(socket, schema: struct.schema, table_name: struct.table_name, queries: get_queries())}
   end
 
   defp update_schema(schema, socket) do
     case CustomObjects.update_struct(socket.assigns.table_name, schema) do
       {:ok, struct} ->
-        {:noreply, assign(socket, schema: struct.schema, table_name: struct.table_name)}
+        {:noreply,
+         assign(socket,
+           schema: struct.schema,
+           table_name: struct.table_name,
+           queries: get_queries()
+         )}
 
       {:error, changeset} ->
         raise "oops"
     end
+  end
+
+  def get_queries do
+    custom_users_object =
+      DynamicSchemaWeb.Schema
+      |> Absinthe.Schema.used_types()
+      |> Enum.filter(fn object -> object.identifier == :custom_users end)
+
+    case custom_users_object do
+      [] -> []
+      object -> get_types_from_absinthe_object(object)
+    end
+  end
+
+  defp get_types_from_absinthe_object(object) do
+    object
+    |> Enum.at(0)
+    |> Map.get(:fields)
+    |> Enum.filter(fn {key, val} -> key |> Atom.to_string() |> String.at(0) != "_" end)
+    |> Enum.map(fn {key, val} -> {key, val.type} end)
+    |> Map.new()
   end
 end
