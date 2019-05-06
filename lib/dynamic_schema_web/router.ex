@@ -19,7 +19,7 @@ defmodule DynamicSchemaWeb.Router do
 
     get "/", PageController, :index
 
-    resources "/objects", ObjectController
+    resources "/objects", ObjectController, only: [:index]
   end
 
   # Other scopes may use custom stacks.

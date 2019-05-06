@@ -11,8 +11,7 @@ config :logger, level: :warn
 
 # Configure your database
 config :dynamic_schema, DynamicSchema.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "nitrino",
   database: "dynamic_schema_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
