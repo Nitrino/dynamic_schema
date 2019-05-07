@@ -17,9 +17,9 @@ defmodule DynamicSchema.CustomObjects do
     new_struct = Ecto.Changeset.change(struct, schema: schema)
     result = Repo.update(new_struct)
 
-    generate_type_files(table_name)
-    generate_schema()
-    reload_schema()
+    # generate_type_files(table_name)
+    # generate_schema()
+    # reload_schema()
 
     result
   end
